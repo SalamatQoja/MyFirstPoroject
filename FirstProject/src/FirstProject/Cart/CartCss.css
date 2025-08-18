@@ -1,0 +1,254 @@
+@font-face {
+    font-family: 'MyFont';
+    src: url('/fonts/MyFont.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.basket-main{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.header2{
+    display: flex;
+    flex-direction: row;
+    width: 1300px;
+    height: 45px;
+    margin-left: 88px;
+    margin-top: 15px;
+}
+.logotip{
+    color: rgb(199, 9, 9);
+}
+.basket-header{
+    width: 1400px;
+    display: flex;
+    flex-direction: row;
+}
+.basket-inner {
+    width: 990px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-left: 90px;
+    border-radius: 10px;
+    box-shadow: 0px 1px 3px 1px rgb(208, 200, 200);
+}
+
+.btn-row3{
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    margin-left: 50px;
+}
+
+.basket-title{
+    margin-left: 85px;
+    color: rgb(73, 77, 81);
+}
+
+.basket-item {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.basket-image {
+    width: 110px;
+    height: 100px;
+    border-radius: 4px;
+}
+
+.basket-full-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 600px;
+    margin-left: 140px;
+    margin-top: -110px;
+}
+
+.basket-name {
+    color: rgb(83, 77, 77);
+}
+
+.basket-total-price {
+    width: 350px;
+    height: 185px;
+    margin-left: 15px;
+    border-radius: 12px;
+    box-shadow: 0px 2px 4px 1px rgb(208, 200, 200);
+}
+
+.globus-input2{
+    min-width: 645px;
+    margin-left: 20px;
+    border-radius: 8px;
+    border: 2px solid rgb(199, 9, 9);
+
+}
+
+.ikons-search2{
+    width: 70px;
+    height: 43px;
+    border-radius: 5px;
+    margin-left: -71px;
+    margin-top: 2px;
+    background-color: rgb(199, 9, 9);
+    color: aliceblue;
+}
+
+.basket-total{
+    margin-left: 22px;
+    color: rgb(103, 106, 109);
+}
+
+.basket-oformlenye{
+    width: 300px;
+    height: 40px;
+    border-radius: 7px;
+    border: none;
+    background-color: blue;
+    font-size: 20px;
+    color: #ffff;
+    margin-top: 60px;
+    margin-left: 22px;
+}
+
+.basket-oformlenye:hover{
+    background-color: rgb(8, 8, 185);
+}
+
+.basket-price {
+    margin-left: 420px;
+    margin-top: -50px;
+}
+
+.basket-remove {
+    color: gray;
+    font-size: 19px;
+    border: none;
+    background-color: white;
+    transform: translateX(163px);
+}
+
+.basket-ikon{
+    color: rgb(199, 9, 9);
+    font-size: 22px;
+    transform: translate(-6px,4px);
+}
+
+.basket-chislit {
+    width: 300px;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    margin-left: 140px;
+    transform: translateY(10px);
+}
+
+.basket-increase {
+    width: 30px;
+    height: 30px;
+    font-size: 22px;
+    background-color: #ffff;
+    border-radius: 4px;
+}
+
+.basket-quantity {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.basket-decrease {
+    width: 30px;
+    height: 30px;
+    font-size: 22px;
+    background-color: #ffff;
+    border-radius: 4px;
+    border: 1px solid rgb(153, 146, 146);
+}
+
+.basket-cost {
+    margin-left: 30px;
+    transform: translateY(-4px);
+}
+
+.basket-clean{
+    width: 200px;
+    height: 40px;
+    border-radius: 7px;
+    border: none;
+    background-color: red;
+    color: white;
+    font-size: 18px;
+    margin-left: 733px;
+    transform: translateY(-4px);
+}
+
+.basket-clean:hover{
+    background-color: rgb(184, 13, 13);
+}
+
+.order-header{
+    width: 600px;
+    box-shadow: 0px 3px 5px 0px rgb(161, 158, 158);
+    border-radius: 10px;
+    margin: auto;
+    background-color: rgb(247, 251, 253);
+    margin-top: 60px;
+}
+
+.order-title{
+    margin-left: 40px;
+    color: rgb(90, 85, 85);
+}
+
+.order-inner{
+    width: 600px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-left: 40px;
+}
+
+.order-input{
+    width: 500px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid rgb(207, 203, 203);
+}
+
+.order-price-row{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 400px;
+    margin-left: 40px;
+}
+
+.order-product-name{
+    margin-left: 40px;
+}
+
+.order-btn1{
+    width: 300px;
+    height: 35px;
+    background-color: red;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    margin-left: 40px;
+    font-size: 18px;
+    transform: translateY(-7px);
+}
+
+.cart-notice{
+    font-size: 33px;
+    color: rgb(72, 31, 31);
+    text-align: center;
+}
