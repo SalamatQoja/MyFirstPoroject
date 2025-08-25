@@ -16,14 +16,13 @@ import { GiArchiveRegister } from "react-icons/gi";
 import { SlBasketLoaded } from "react-icons/sl";
 import { ImExit } from "react-icons/im";
 import type { Product } from "../types";
-import { RegistrationForm } from "../Avtorizatsya/Registration";
-import { AuthoritaionLogin } from "../Avtorizatsya/Login";
 import { useNavigate } from "react-router";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { addItemStart } from "../Cart/CartSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import { GoListOrdered } from "react-icons/go";
+import { fetchProducts } from "../productService.ts/productService";
 
 export const ProductListRegistration: React.FC = () => {
     const settings = {
@@ -45,16 +44,18 @@ export const ProductListRegistration: React.FC = () => {
     //     centerMode: true,
     //     centerPadding: "60px",
     // };
-
+    const [total, setTotal] = useState<number>(0);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { products, categories, error, loading } = useSelector((state: RootState) => state.app);
     const [productFull, setProductFull] = useState<Product | null>(null);
     const [searchProduct, setSearchProduct] = useState("");
-    const [authShow, setAuthshow] = useState(false);
-    const [loginShow, setLoginShow] = useState(false);
     const [quantity, setQuantity] = useState(1);
+    const [proloading, setproLoading] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string | number | null>(null);
+    const [items, setItems] = useState<Product[]>([]);
+    const [nextUrl, setNextUrl] = useState<string | null>(null);
+    const [prevUrl, setPrevUrl] = useState<string | null>(null);
 
 
     const handleProductShow = (product: Product) => {
@@ -70,23 +71,6 @@ export const ProductListRegistration: React.FC = () => {
         setSearchProduct(event.target.value);
     };
 
-    const handleAuthClose = () => {
-        setAuthshow(false);
-    };
-
-
-    const handleAuthClick = () => {
-        setAuthshow(true);
-    };
-
-    const handleLoginClose = () => {
-        setLoginShow(false);
-    };
-
-
-    const handleLoginClick = () => {
-        setLoginShow(true);
-    };
 
     useEffect(() => {
         dispatch(fetchProductsRequest());
@@ -97,6 +81,34 @@ export const ProductListRegistration: React.FC = () => {
         setSelectedCategory(catIdOrName);
         // можно также прокрутить вверх: window.scrollTo(0, 0);
     };
+
+    useEffect(() => {
+        loadPage({ limit: 20, offset: 0 });
+    }, []);
+
+    const loadPage = async (opts: { url?: string; limit?: number; offset?: number }) => {
+        try {
+            setproLoading(true);
+            const resp = await fetchProducts({ url: opts.url, limit: opts.limit, offset: opts.offset });
+            // заменить список (или при необходимости — append)
+            setItems(resp.data.items);
+            setNextUrl(resp.data.next);
+            setPrevUrl(resp.data.previous);
+            setTotal(resp.data.total_records);
+        } finally {
+            setproLoading(false);
+        }
+    };
+
+    // обработчики кнопок
+    const onNext = () => {
+        if (nextUrl) loadPage({ url: nextUrl });
+    };
+    const onPrev = () => {
+        if (prevUrl) loadPage({ url: prevUrl });
+    };
+
+
 
     // сброс фильтра категории
     const clearCategory = () => setSelectedCategory(null);
@@ -152,11 +164,11 @@ export const ProductListRegistration: React.FC = () => {
     }, [selectedCategory, categories]);
 
 
-    if (loading && products.length === 0) return <div><CircularProgress /></div>;
+    if (loading && items.length === 0) return <div><CircularProgress /></div>;
     if (loading && categories.length === 0) return <div><CircularProgress /></div>;
 
 
-    const filterProduct = products.filter((product) => {
+    const filterProduct = items.filter((product) => {
         const productSearch = product.name.toLowerCase().includes(searchProduct.toLowerCase());
         return productSearch;
     });
@@ -165,6 +177,7 @@ export const ProductListRegistration: React.FC = () => {
         const likelyProducts = products.filter((p) => p.category === productFull.category && p.id !== productFull.id);
         return (
             <div className="productShowModal">
+                <div className="main-top"></div>
                 <nav className="header">
                     <img src={LogotipGlobus} alt="" className="logotip" />
                     <input type="text"
@@ -180,7 +193,7 @@ export const ProductListRegistration: React.FC = () => {
                         <button type="submit" className="pr-register-myorders"
                             onClick={() => navigate('/my_orders')}>
                             Мой заказ
-                            </button>
+                        </button>
                         <button type="submit" className="pr-register-basket-btn1"
                             onClick={() => navigate("/cart")}>
                             Korzina
@@ -199,7 +212,6 @@ export const ProductListRegistration: React.FC = () => {
                         </button>
                     </div>
                 </nav>
-
                 <div className="productShow-row">
                     <div className="productShow-item">
                         <div className="product-wrapper">
@@ -273,6 +285,7 @@ export const ProductListRegistration: React.FC = () => {
         const catImg = categoryImageMap.get(String(selectedCategoryMeta.id)) ?? '/images/default.png';
         return (
             <div className="main">
+                <div className="main-top"></div>
                 <div className="header">
                     <img src={LogotipGlobus} alt="" className="logotip" />
                     <input type="text"
@@ -375,6 +388,7 @@ export const ProductListRegistration: React.FC = () => {
     }
     return (
         <div className="main">
+            <div className="main-top"></div>
             <div className="header">
                 <img src={LogotipGlobus} alt="" className="logotip" />
                 <input type="text"
@@ -435,30 +449,21 @@ export const ProductListRegistration: React.FC = () => {
                     </div>
                 </div>
             </div>
-            {authShow && (
-                <div>
-                    <RegistrationForm />
-                </div>
-            )}
-            {loginShow && (
-                <div>
-                    <AuthoritaionLogin />
-                </div>
-            )}
             <hr style={{ width: "1333px", marginLeft: "70px", marginTop: "5px" }} />
             <div className="products">
-                {filterProduct.map((item) => (
-                    <div key={item.id}
+                {/* <div>Всего: {total}</div> */}
+                {proloading && <div>Загрузка...</div>}
+                {filterProduct.map(it => (
+                    <div key={it.id}
                         className="products-row"
-                        onClick={() => handleProductShow(item)}>
+                        onClick={() => handleProductShow(it)}>
                         <div className="box-row">
-                            <img
-                                src={item.images[0]?.image}
-                                alt="picture" className="globus-img-size" />
+                            {/* <strong>{it.name}</strong> — {it.price} — amount: {it.amount} */}
+                            <img src={it.images[0]?.image} alt="" className="globus-img-size" />
                             <div className="product-title">
-                                <p>{item.name}</p>
+                                <p>{it.name}</p>
                                 <div className="product-price">
-                                    <p>{item.price} <span>sum</span></p>
+                                    <p>{it.price} <span>sum</span></p>
                                     <button className="product-btn">
                                         <SlBasket className="product-basket"
                                         /></button>
@@ -467,6 +472,11 @@ export const ProductListRegistration: React.FC = () => {
                         </div>
                     </div>
                 ))}
+            </div>
+            <div className="product-next-prev">
+                <p>{total}</p>
+                <button onClick={onPrev} disabled={!prevUrl || loading} className="product-btn3">Prev</button>
+                <button onClick={onNext} disabled={!nextUrl || loading} className="product-btn3">Next</button>
             </div>
         </div>
     );

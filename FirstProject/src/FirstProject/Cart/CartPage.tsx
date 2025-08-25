@@ -45,6 +45,7 @@ const CartPage: React.FC = () => {
 
     return (
         <div className="basket-main">
+            <div className="main-top"></div>
             <nav className="header2">
                 <img src={LogotipGlobus} alt="" className="logotip" />
                 <input type="text"
@@ -79,6 +80,7 @@ const CartPage: React.FC = () => {
                     </button>
                 </div>
             </nav>
+            <hr style={{width: "1340px", marginLeft: "60px", marginTop: "16px"}} />
             <h1 className="basket-title">Корзина</h1>
             <div className="basket-header">
                 <div className="basket-inner">

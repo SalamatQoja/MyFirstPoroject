@@ -98,6 +98,7 @@ export const OrderPage: React.FC = () => {
 
     return (
         <div className="checkout-header-general">
+            <div className="main-top"></div>
             <nav className="header">
                 <img src={LogotipGlobus} alt="" className="logotip" />
                 <input type="text"

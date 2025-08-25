@@ -53,6 +53,7 @@ export const RegistrationForm: React.FC = () => {
 
     return (
         <div className="register">
+            <div className="main-top"></div>
             <div className="header2">
                 <img src={LogotipGlobus} alt="picture"
                     className="logotip"

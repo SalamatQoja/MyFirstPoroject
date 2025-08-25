@@ -9,6 +9,7 @@ export interface Product {
     amount: number;
     category: number;
     images: { id: number; image: string }[];
+
 }
 
 export interface ProductApiresponse {
@@ -17,6 +18,9 @@ export interface ProductApiresponse {
     errorCode: string | null;
     data: {
         items: Product[];
+        total_records: number;
+        next: string | null;    // полный URL или null
+        previous: string | null;
     };
 }
 
@@ -26,7 +30,7 @@ export interface Category {
     min_price: number;
     max_price: number;
     parent_category: string | null;
-    image: string;
+    images: string;
 
 }
 
@@ -92,12 +96,12 @@ interface FetchCategoriesRequestAction {
 
 interface FetchCategoriesSuccessAction {
     type: typeof CategoryActionTypes.FETCH_CATEGORIES_SUCCESS;
-    payload: Category[];    
+    payload: Category[];
 }
 
 interface FetchCategoriesFailureAction {
     type: typeof CategoryActionTypes.FETCH_CATEGORIES_FAILURE;
-    payload: string;        
+    payload: string;
 }
 
 export type CategoryActions =

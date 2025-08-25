@@ -62,6 +62,7 @@ export const AuthoritaionLogin: React.FC = () => {
 
     return (
         <div className="login-main">
+            <div className="main-top"></div>
             <div className="header2">
                 <img src={LogotipGlobus} alt="picture" 
                 className="logotip"
