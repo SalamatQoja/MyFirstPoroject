@@ -8,13 +8,10 @@ import { GiArchiveRegister } from "react-icons/gi";
 import { useNavigate } from "react-router";
 import LogotipGlobus from "../img/logotipGlobus.png";
 import { IoSearchSharp } from "react-icons/io5";
-import { AuthoritaionLogin } from "../Avtorizatsya/Login";
 
 export const RegistrationForm: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [authShow, setAuthshow] = useState(false);
-    const [loginShow, setLoginShow] = useState(false);
     const { registering, registerError, userId } = useAppSelector(s => s.auth);
 
     const [form, setForm] = useState<RegisterPayload>({
@@ -29,8 +26,14 @@ export const RegistrationForm: React.FC = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (!form.phone || form.phone.length < 9) {
+            // siz istasangiz local validation xabari ko'rsatishingiz mumkin
+            alert('Iltimos, telefon raqamingizni toʻliq kiriting');
+            return;
+        }
         dispatch(registerStart(form))
         localStorage.setItem("registered_phone", form.phone);
 
@@ -39,17 +42,10 @@ export const RegistrationForm: React.FC = () => {
 
     useEffect(() => {
         if (userId) {
+            if (form.phone) localStorage.setItem('registered_phone', form.phone);
             navigate("/verify-otp");
         }
     }, [userId, navigate]);
-
-    const handleLoginClick = () => {
-        setLoginShow(true);
-    };
-
-    const handleAuthClick = () => {
-        setAuthshow(true);
-    };
 
     return (
         <div className="register">
@@ -66,12 +62,12 @@ export const RegistrationForm: React.FC = () => {
                 </div>
                 <div className="btn-row5">
                     <button
-                        onClick={handleLoginClick}
+                        onClick={() => navigate('/login')}
                         className="globus-receiv">
                         Vxod <BiUser className="user-ikons" />
                     </button>
                     <button
-                        onClick={handleAuthClick}
+                        onClick={() => navigate('/register')}
                         className="globus-basket">
                         Регистрация
                         <GiArchiveRegister className="basket-ikons" />
@@ -79,16 +75,6 @@ export const RegistrationForm: React.FC = () => {
                 </div>
             </div>
             <hr style={{ width: "1400px", marginTop: "18px" }} />
-            {authShow && (
-                <div>
-                    <RegistrationForm />
-                </div>
-            )}
-            {loginShow && (
-                <div>
-                    <AuthoritaionLogin />
-                </div>
-            )}
             <div className="registr-main">
                 <h1 className="register-title">Регистрация</h1>
                 <form onSubmit={handleSubmit}
@@ -99,6 +85,7 @@ export const RegistrationForm: React.FC = () => {
                             name="first_name"
                             onChange={handleChange}
                             placeholder="Vashe imya"
+                            value={form.first_name}
                             className="register-input"
                             required
                         />
@@ -107,6 +94,7 @@ export const RegistrationForm: React.FC = () => {
                             name="last_name"
                             onChange={handleChange}
                             placeholder="vashe familya"
+                            value={form.last_name}
                             className="register-input"
                             required
                         />
@@ -115,6 +103,7 @@ export const RegistrationForm: React.FC = () => {
                             name="password"
                             onChange={handleChange}
                             placeholder="Vash parol"
+                            value={form.password}
                             className="register-input"
                             required
                         />
@@ -123,6 +112,7 @@ export const RegistrationForm: React.FC = () => {
                             name="phone"
                             onChange={handleChange}
                             placeholder="998901234567"
+                            value={form.phone}
                             className="register-input"
                             required
                         />
@@ -131,6 +121,7 @@ export const RegistrationForm: React.FC = () => {
                             name="date_of_birth"
                             onChange={handleChange}
                             placeholder="Viberite datu"
+                            value={form.date_of_birth}
                             className="register-input"
                             required
                         />
@@ -138,6 +129,7 @@ export const RegistrationForm: React.FC = () => {
                         <select name="gender"
                             onChange={handleChange}
                             className="register-input"
+                            value={form.gender}
                             required>
                             <option value="male">Mujchina</option>
                             <option value="female">Jenshina</option>
@@ -146,7 +138,7 @@ export const RegistrationForm: React.FC = () => {
                             className="register-btn2">
                             {registering ? "Отправка..." : "Зарегистрироваться"}
                         </button>
-                        {registerError && <p className="error">{registerError}</p>}
+                        {registerError && <p className="error" role="alert">{registerError}</p>}
                     </div>
                 </form>
             </div>

@@ -451,7 +451,6 @@ export const ProductListRegistration: React.FC = () => {
             </div>
             <hr style={{ width: "1333px", marginLeft: "70px", marginTop: "5px" }} />
             <div className="products">
-                {/* <div>Всего: {total}</div> */}
                 {proloading && <div>Загрузка...</div>}
                 {filterProduct.map(it => (
                     <div key={it.id}
@@ -481,99 +480,3 @@ export const ProductListRegistration: React.FC = () => {
         </div>
     );
 };
-
-//     return (
-//         <div className="main">
-//             <div className="main-row"></div>
-//             <div className="header">
-//                 <img src={LogotipGlobus} alt="" className="logotip" />
-//                 <input type="text"
-//                     className="globus-input"
-//                     onChange={handleChange} />
-//                 <div className="ikons-1">
-//                     <IoSearchSharp className="ikons-search" />
-//                 </div>
-//                 <div className="btn-row2" >
-//                     <button className="pr-register-exit"
-//                         onClick={() => navigate("/product")}>
-//                         Выйты
-//                         < ImExit className="pr-register-exit-btn" />
-//                     </button>
-//                     <button type="submit" className="pr-register-basket-btn1"
-//                         onClick={() => navigate("/cart")}>
-//                         Korzina
-//                         <SlBasketLoaded className="pr-registerbasket2" />
-//                     </button>
-//                     <button
-//                         onClick={() => navigate("/login")}
-//                         className="globus-receiv">
-//                         Vxod <BiUser className="user-ikons" />
-//                     </button>
-//                     <button
-//                         onClick={() => navigate("/register")}
-//                         className="globus-basket">
-//                         Регистрация
-//                         <GiArchiveRegister className="basket-ikons" />
-//                     </button>
-//                 </div>
-//             </div>
-//             <div className="header-slider">
-//                 <Slider {...settings} >
-//                     {slickSlider.map((d) => (
-//                         <div className="slick-slider">
-//                             <li>
-//                                 <img src={d.image} alt="" className="img-size" />
-//                             </li>
-//                         </div>
-//                     ))}
-//                 </Slider>
-//             </div>
-//             <div className="categories-main">
-//                 <h2 className="category-title">Vse kategory</h2>
-//                 <div className="category-row">
-//                     {/* <Slider {...CategorySlidersettings} className="category-slider">
-//                         {categories.map(cat => (
-//                             <div key={cat.id}
-//                                 className="categories-inner">
-//                                 <p className="category-p">{cat.name}</p>
-//                             </div>
-//                         ))}
-//                     </Slider> */}
-//                 </div>
-//             </div>
-//             {authShow && (
-//                 <div>
-//                     <RegistrationForm onClose={handleAuthClose} />
-//                 </div>
-//             )}
-//             {loginShow && (
-//                 <div>
-//                     <AuthoritaionLogin onClose={handleLoginClose} />
-//                 </div>
-//             )}
-//             <div className="products">
-//                 {filterProduct.map((item) => (
-//                     <div key={item.id}
-//                         className="products-row"
-//                         onClick={() => handleProductShow(item)}>
-//                         <div className="box-row">
-//                             <img
-//                                 src={item.images[0]?.image}
-//                                 alt="picture" className="globus-img-size" />
-//                             <div className="product-title">
-//                                 <p>{item.name}</p>
-//                                 <div className="product-price">
-//                                     <p>{item.price} <span>sum</span></p>
-//                                     <button className="product-btn">
-//                                         <SlBasket className="product-basket"
-//                                         /></button>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 ))}
-//             </div>
-//         </div>
-//     );
-// };
-

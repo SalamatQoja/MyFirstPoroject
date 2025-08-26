@@ -8,17 +8,17 @@ import CartPage from './FirstProject/Cart/CartPage';
 import { OrderPage } from './FirstProject/Payme/CheckoutPage';
 import CardPage from './FirstProject/Payme/CardPage';
 import VerifyCardPage from './FirstProject/Payme/verifyCardPage';
-// import OrdersPage from './FirstProject/Payme/OrdersPage';
 import MyOrdersPage from './FirstProject/Payme/OrdersPage';
+import OtpVerifySide from './FirstProject/Avtorizatsya/OtfVerify';
 
 function App() {
-  const navigate = useNavigate();
   return (
     <>
       <Routes>
         <Route path="/" element={<ProductList />} />
         <Route path="/login" element={<AuthoritaionLogin />} />
         <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/verify-otp" element={<OtpVerifySide />} />
         <Route path="/productregistration" element={<ProductListRegistration />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/order" element={<OrderPage />} />
